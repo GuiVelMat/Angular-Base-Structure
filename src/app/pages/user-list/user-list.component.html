@@ -1,0 +1,24 @@
+<main>
+    <div class="container mx-auto pt-5">
+        <div className="mb-3">
+            <h2 className="text-3xl font-bold tracking-tight">Lista de usuarios</h2>
+            <p className="text-muted-foreground mt-2">
+                Administra los usuarios en la plataforma de más nuevo a más antiguo
+            </p>
+        </div>
+
+        <search-component placeholder="Buscar usuarios..." (searchChange)="onSearchChange($event)" />
+
+        @if (userStore.isLoading()) {
+        <!-- Aquí sería más correcto poner un skeleton -->
+        <p>Loading users...</p>
+        } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+            @for (user of userStore.users(); track user.id) {
+            <card-user [user]="user" />
+            }
+        </div>
+        }
+
+    </div>
+</main>

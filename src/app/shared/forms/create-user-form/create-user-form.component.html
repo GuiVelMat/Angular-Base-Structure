@@ -1,0 +1,163 @@
+<div class="w-full max-w-lg mx-auto p-6">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800">{{ isUserUpdate ? 'Editar usuario' : 'Crear nuevo usuario' }}</h2>
+        <p class="text-gray-500 text-sm mb-6">Los campos con <span class="text-red-500">*</span> son obligatorios</p>
+
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="space-y-4">
+            <!-- id -->
+            <div class="space-y-2">
+                <label for="id" class="block text-sm font-medium text-gray-700">ID</label>
+                <input type="number" id="id" formControlName="id" class="w-full px-3 py-2 border rounded-md bg-gray-100"
+                    readonly>
+            </div>
+
+            <!-- Nombre -->
+            <div class=" space-y-2">
+                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre <span
+                        class="text-red-500">*</span></label>
+                <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre completo"
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [ngClass]="{'border-red-500': submitted && f['nombre'].errors}">
+                @if (submitted && f['nombre'].errors) {
+                <div class="text-red-500 text-sm mt-1">
+                    @if (f['nombre'].errors['required']) {
+                    <div>El nombre es obligatorio</div>
+                    }
+                    @if (f['nombre'].errors['maxlength']) {
+                    <div>El nombre no puede exceder los 50 caracteres</div>
+                    }
+                </div>
+                }
+                <div class="text-xs text-end">
+                    @if (userForm.get('nombre')?.value?.length > 50 || userForm.get('nombre')?.value?.length ===
+                    null || userForm.get('nombre')?.value?.length === 0) {
+                    <span class="text-red-500">{{ userForm.get('nombre')?.value?.length || 0 }}/50</span>
+                    } @else {
+                    <span class="text-gray-500">{{ userForm.get('nombre')?.value?.length || 0 }}/50</span>
+                    }
+                </div>
+            </div>
+
+            <!-- CIF -->
+            <div class="space-y-2">
+                <label for="cif" class="block text-sm font-medium text-gray-700">CIF <span
+                        class="text-red-500">*</span></label>
+                <input type="text" id="cif" formControlName="cif" placeholder="12345678A"
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [ngClass]="{'border-red-500': submitted && f['cif'].errors}">
+                @if (submitted && f['cif'].errors) {
+                <div class="text-red-500 text-sm mt-1">
+                    @if (f['cif'].errors['required']) {
+                    <div>El CIF es obligatorio</div>
+                    }
+                    @if (f['cif'].errors['minlength'] || f['cif'].errors['maxlength']) {
+                    <div>El CIF debe tener exactamente 9 caracteres</div>
+                    }
+                </div>
+                }
+                <div class="text-xs text-end">
+                    @if (userForm.get('cif')?.value?.length !== 9) {
+                    <span class="text-red-500">{{ userForm.get('cif')?.value?.length || 0 }}/9</span>
+                    }
+                    @else {
+                    <span class="text-green-500">{{ userForm.get('cif')?.value?.length || 0 }}/9</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Dirección -->
+            <div class="space-y-2">
+                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección <span
+                        class="text-red-500">*</span></label>
+                <input type="text" id="direccion" formControlName="direccion" placeholder="Calle Falsa, 123"
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [ngClass]="{'border-red-500': submitted && f['direccion'].errors}">
+                @if (submitted && f['direccion'].errors) {
+                <div class="text-red-500 text-sm mt-1">
+                    @if (f['direccion'].errors['required']) {
+                    <div>La dirección es obligatoria</div>
+                    }
+                    @if (f['direccion'].errors['maxlength']) {
+                    <div>La dirección no puede exceder los 70 caracteres</div>
+                    }
+                </div>
+                }
+                <div class="text-xs text-end">
+                    @if (userForm.get('direccion')?.value?.length > 70 || userForm.get('direccion')?.value?.length ===
+                    null || userForm.get('direccion')?.value?.length === 0) {
+                    <span class="text-red-500">{{ userForm.get('direccion')?.value?.length || 0 }}/70</span>
+                    }
+                    @else {
+                    <span class="text-gray-500">{{ userForm.get('direccion')?.value?.length || 0 }}/70</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="space-y-2">
+                <label for="telefono" class="block text-sm font-medium text-gray-700 ">Teléfono <span
+                        class="text-red-500">*</span></label>
+                <input type="tel" id="telefono" formControlName="telefono" placeholder="600123456"
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [ngClass]="{'border-red-500': submitted && f['telefono'].errors}">
+                @if (submitted && f['telefono'].errors) {
+                <div class="text-red-500 text-sm mt-1">
+                    @if (f['telefono'].errors['required']) {
+                    <div>El teléfono es obligatorio</div>
+                    }
+                    @if (f['telefono'].errors['pattern']) {
+                    <div>El teléfono debe tener 9 dígitos</div>
+                    }
+                </div>
+                }
+                <div class="text-xs text-end">
+                    @if (userForm.get('telefono')?.value?.length !== 9) {
+                    <span class="text-red-500">{{ userForm.get('telefono')?.value?.length || 0 }}/9</span>
+                    }
+                    @else {
+                    <span class="text-green-500">{{ userForm.get('telefono')?.value?.length || 0 }}/9</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="space-y-2">
+                <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
+                <textarea id="observaciones" formControlName="observaciones" rows="3" placeholder="Observaciones..."
+                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    [ngClass]="{'border-red-500': submitted && f['observaciones'].errors}"></textarea>
+                @if (submitted && f['observaciones'].errors) {
+                <div class="text-red-500 text-sm mt-1">
+                    @if (f['observaciones'].errors['maxlength']) {
+                    <div>Las observaciones no pueden exceder los 200 caracteres</div>
+                    }
+                </div>
+                }
+                <div class="text-xs text-end">
+                    @if (userForm.get('observaciones')?.value?.length > 200) {
+                    <span class="text-red-500">{{ userForm.get('observaciones')?.value?.length || 0
+                        }}/200</span>
+                    }
+                    @else {
+                    <span class="text-gray-500">{{ userForm.get('observaciones')?.value?.length || 0
+                        }}/200</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex justify-end space-x-3 pt-4">
+                @if (isUserUpdate) {
+                <button type="button" (click)="cancelEdit()"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Cancelar Edición
+                </button>
+                }
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    {{ isUserUpdate ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
